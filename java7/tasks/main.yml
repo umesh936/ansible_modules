@@ -1,0 +1,30 @@
+---
+# Assuming here , Java7 Jdk tar in placed in file folder
+- name: purge open jdk first 
+  shell: sudo apt-get purge openjdk-\*
+
+- name: Ensures /usr/local/java dir exists
+  file: path=/usr/local/java/jdk/ state=directory
+
+- name: copy Java Tar file
+  copy: src=files/jdk-linux-x64.tar.gz dest=/usr/local/java/jdk-linux-x64.tar.gz
+
+  #change current directory before untar
+- name: untar Jdk File
+  shell: tar xvzf jdk-linux-x64.tar.gz -C /usr/local/java/jdk/ --strip-components=1 chdir=/usr/local/java/
+
+- name: Add the entry in /etc/profile
+  lineinfile: dest=/etc/profile line="JAVA_HOME=/usr/local/java/jdk/\nPATH=$PATH:$JAVA_HOME/bin\nexport JAVA_HOME\nexport PATH" regexp="^JAVA_HOME%" state=present insertafter=EOF create=True	
+
+- name: update alternative for java
+  shell: sudo update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/jdk/jre/bin/java" 1
+
+- name: update alternative for javac
+  shell: sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/local/java/jdk/bin/javac" 1
+
+- name: set java environment for system
+  shell: sudo update-alternatives --set java /usr/local/java/jdk/jre/bin/java
+
+- name: set javac environment for system
+  shell:  sudo update-alternatives --set javac /usr/local/java/jdk/bin/javac
+
