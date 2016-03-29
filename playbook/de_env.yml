@@ -1,18 +1,18 @@
 ---
 ###############################################
-############ for De Environment ###############
+############ for Development Environment ###############
 ###############################################
 
 ########### Certification.#####################
 
-- hosts: de-certification
+- hosts: dev-machine1
   roles:
-     - { role: apache, host-name: certification.mettl.de}
-     - { role: tomcat7,tomcat-name: certification-tomcat,tomcat-listen-port: 8030 , tomcat-shutdown-port: 8005 }
+     - { role: apache, host-name: machine1.dev}
+     - { role: tomcat7,tomcat-name: machine1-tomcat,tomcat-listen-port: 8030 , tomcat-shutdown-port: 8005 }
      - { role: scripts,  component: web }
 
 ########### active mq #####################
 
-- hosts: de-activemq
+- hosts: de-machine2
   roles:
      - { role: scripts,  component: service }
