@@ -1,0 +1,45 @@
+---
+
+- name: General | Install unzip  packages.
+  apt: name=unzip update_cache=yes state=latest
+
+- name: General | Install python3 packages.
+  apt: name=python3 update_cache=yes state=latest
+
+- name: General | Install sendmail packages.
+  apt: name=sendmail update_cache=yes state=latest
+
+- name: General | Install python pip packages.
+  apt: name=python-pip update_cache=yes state=latest
+
+- name: General | Install python dev packages.
+  apt: name=python-dev update_cache=yes state=latest
+
+- name: General | Install build essential packages.
+  apt: name=build-essential update_cache=yes state=latest
+
+- name: Creating user mettl
+  user:  name=mettl
+
+- name: Creating user readonly
+  user:  name=readonly
+
+# make sure all imporatnt directories in place
+# .ssh directories for user
+# release directory
+
+- name: Ensures /home/mettl/.ssh dir exists
+  file: path=/home/mettl/.ssh state=directory owner=mettl group=mettl
+
+- name: Ensures /home/readonly/.ssh dir exists
+  file: path=/home/readonly/.ssh state=directory owner=readonly group=readonly
+
+- name: Ensures release directory exists
+  file: path=/home/mettl/release/ state=directory owner=mettl group=mettl
+
+# Copy Files there
+- name: copy mettl key file
+  copy: src=files/mettl-key dest=/home/mettl/.ssh/authorized_keys owner=mettl group=mettl
+
+- name: copy readonly key file
+  copy: src=files/readonly-key dest=/home/readonly/.ssh/authorized_keys owner=readonly group=mettl

@@ -1,0 +1,49 @@
+---
+- name: Ensures release directory exists
+  file: path=/home/mettl/release/ state=directory owner=mettl group=mettl
+
+- name: copy machine up file
+  copy: src=files/genericMachineUp  dest=/home/mettl/release/genericMachineUp.sh owner=mettl group=mettl mode=0755
+
+- name: copy clean log script File
+  copy: src=files/cleanLog.sh dest=/home/mettl/release/cleanlog.sh owner=mettl group=mettl mode=0755
+
+- name: copy file_functions.sh script File
+  copy: src=files/file_functions.sh dest=/home/mettl/release/file_functions.sh owner=mettl group=mettl mode=0755
+
+- name: copy deployMettlZipComponent.sh script File
+  copy: src=files/deployMettlZipComponent.sh dest=/home/mettl/release/deployMettlZipComponent.sh owner=mettl group=mettl mode=0755
+
+- name: copy deployPythonRelease.sh script File
+  copy: src=files/deployPythonRelease.sh dest=/home/mettl/release/deployPythonRelease.sh owner=mettl group=mettl mode=0755
+
+- name: copy clean log script File
+  copy: src=files/deployMettlJavaService.sh dest=/home/mettl/release/deployMettlJavaService.sh owner=mettl group=mettl mode=0755
+  when: component == "service" or component == "both"
+
+- name: copy deployMettlJavaServiceWrapper.sh script File
+  copy: src=files/deployMettlJavaServiceWrapper.sh dest=/home/mettl/release/deployMettlJavaServiceWrapper.sh owner=mettl group=mettl mode=0755
+  when: component == "service" or component == "both"
+
+- name: copy startJavaService.sh script File
+  copy: src=files/startJavaService.sh dest=/home/mettl/release/startJavaService.sh owner=mettl group=mettl mode=0755
+  when: component == "service" or component == "both"
+
+- name: copy stopJavaService.sh script File
+  copy: src=files/stopJavaService.sh dest=/home/mettl/release/stopJavaService.sh owner=mettl group=mettl mode=0755
+  when: component == "service" or component == "both"
+
+############################################### Web components ####################################################
+
+- name: copy deployMettlWebApp.sh script File
+  copy: src=files/deployMettlWebApp.sh dest=/home/mettl/release/deployMettlWebApp.sh owner=mettl group=mettl mode=0755
+  when: component == "web" or component == "both"
+
+- name: copy startServer.sh script File
+  copy: src=files/startServer.sh dest=/home/mettl/release/startServer.sh owner=mettl group=mettl mode=0755
+  when: component == "web" or component == "both"
+
+- name: copy stopServer.sh script File
+  copy: src=files/stopServer.sh dest=/home/mettl/release/stopServer.sh owner=mettl group=mettl mode=0755
+  when: component == "web" or component == "both"
+ 
